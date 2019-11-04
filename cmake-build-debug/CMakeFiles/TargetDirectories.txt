@@ -1,0 +1,3 @@
+C:/Users/piero/Downloads/Matriz_esparza/cmake-build-debug/CMakeFiles/Matriz_esparza.dir
+C:/Users/piero/Downloads/Matriz_esparza/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/piero/Downloads/Matriz_esparza/cmake-build-debug/CMakeFiles/rebuild_cache.dir

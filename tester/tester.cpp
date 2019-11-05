@@ -59,7 +59,7 @@ Matrix<T> Tester::setMatrix(T **&matrix, unsigned int rows, unsigned int columns
     Matrix<T> result(rows, columns);
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < columns; ++j) {
-            result.set(i, j, matrix[i][j]);
+            result.establecerCelda(i, j, matrix[i][j]);
             ASSERT(result(i, j) == matrix[i][j], "There is a problem with the set or operator()");
         }
     }

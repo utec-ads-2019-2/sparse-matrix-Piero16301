@@ -61,12 +61,39 @@ public:
             throw invalid_argument("La posicion de filas o columnas introducidas es invalida");
         }
         Node <T> *actual = this->root;
-        string recorrido = (fila >= columna) ? "fila" : "columna";
+        string recorrido = (fila > columna) ? "columna" : "fila";
         if (recorrido == "fila") {
             buscarIndiceFila(fila, actual);
             if (!actual->siguiente) {
                 Node <T> *temporal = new Node<T>(fila, columna, valor);
                 actual->siguiente = temporal;
+                Node <T> *numeroColumna = this->root;
+                buscarIndiceColumna(columna, numeroColumna);
+                while (numeroColumna && numeroColumna->fila <= fila) {
+                    numeroColumna = numeroColumna->abajo;
+                }
+                if (numeroColumna->abajo) {
+                    Node <T> *siguienteNodo = numeroColumna->abajo;
+                    temporal->abajo = siguienteNodo;
+                    numeroColumna->abajo = temporal;
+                } else {
+                    numeroColumna->abajo = temporal;
+                }
+            } else {
+                while (actual && actual->columna <= columna) {
+                    if (actual->columna == columna) {
+                        actual->valor = valor;
+                        return;
+                    }
+                    actual = actual->siguiente;
+                }
+                Node <T> *temporal = new Node<T>(fila, columna, valor);
+                if (actual->siguiente) {
+                    temporal->siguiente = actual->siguiente;
+                    actual->siguiente = temporal;
+                } else {
+                    actual->siguiente = temporal;
+                }
                 Node <T> *numeroColumna = this->root;
                 buscarIndiceColumna(columna, numeroColumna);
                 while (numeroColumna && numeroColumna->fila <= fila) {
@@ -118,8 +145,13 @@ public:
             actual = pivote;
             for (int j = 0; j <= this->columnas; ++j) {
                 if (actual) {
-                    if (actual->indice == -1 && actual->fila == i-1 && actual->columna == j-1) {
-                        cout << actual->valor << ' ';
+                    if (actual->indice == -1) {
+                        if (actual->fila == i-1 && actual->columna == j-1) {
+                            cout << actual->valor << ' ';
+                        } else {
+                            cout << '0' << ' ';
+                            continue;
+                        }
                     } else {
                         cout << actual->indice << ' ';
                     }
@@ -131,6 +163,17 @@ public:
             pivote = pivote->abajo;
             cout << endl;
         }
+        /*Node <T> *actual = this->root;
+        Node <T> *cota = this->root;
+        while (actual) {
+            while (actual) {
+                cout << actual->valor << ' ';
+                actual = actual->siguiente;
+            }
+            actual = cota->abajo;
+            cota = actual;
+            cout << endl;
+        }*/
     };
 
     ~Matrix() {

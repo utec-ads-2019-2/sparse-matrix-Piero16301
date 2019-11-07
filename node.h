@@ -16,16 +16,6 @@ public:
     Node(int indice) : siguiente{nullptr}, abajo{nullptr}, indice{indice} {}
     Node(int fila, int columna, T valor) : siguiente{nullptr}, abajo{nullptr}, fila{fila}, columna{columna}, valor{valor} {};
 
-    void killSelf() {
-        if (this->abajo) {
-            this->abajo->killSelf();
-        }
-        if (this->siguiente) {
-            this->siguiente->killSelf();
-        }
-        delete this;
-    }
-
     friend class Matrix<T>;
 };
 

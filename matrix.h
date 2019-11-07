@@ -12,8 +12,32 @@ private:
     Node <T> *root = nullptr;
     unsigned int filas = 0, columnas = 0;
 
+protected:
+    void buscarIndiceFila(unsigned int indice, Node<T>* &actual) {
+        while (actual->indice != indice) {
+            actual = actual->abajo;
+        }
+    }
+
+    void buscarIndiceColumna(unsigned int indice, Node<T>* &actual) {
+        while (actual->indice != indice) {
+            actual = actual->siguiente;
+        }
+    }
+
+    void clear(Node <T>* &actual) {
+        if (actual->abajo) {
+            clear(actual->abajo);
+        }
+        if (actual->siguiente) {
+            clear(actual->siguiente);
+        }
+        actual = nullptr;
+        delete actual;
+    }
+
 public:
-    Matrix(unsigned int filas, unsigned int columnas) {
+    Matrix(unsigned int filas, unsigned int columnas) : filas{filas}, columnas{columnas} {
         this->root = new Node<T>();
         Node <T> *actual = this->root;
         for (int i = 0; i < columnas; ++i) {
@@ -29,44 +53,36 @@ public:
             actual = actual->abajo;
         }
         actual->abajo = nullptr;
-        this->filas = filas;
-        this->columnas = columnas;
     };
 
     void establecerCelda(unsigned int fila, unsigned int columna, T valor) {
         // Se asigna un valor a una celda específica
+        if (!(fila >= 0 && fila < this->filas && columna >= 0 && columna < this->columnas)) {
+            throw invalid_argument("La posicion de filas o columnas introducidas es invalida");
+        }
         Node <T> *actual = this->root;
-        int minimo = (fila >= columna) ? columna : fila;
-        while (actual->indice != minimo) {
-            actual = (minimo == fila) ? actual->abajo : actual->siguiente;
-        };
-        Node <T> *previo = nullptr;
-        while (actual && actual->fila <= fila && actual->columna <= columna) {
-            if (actual->fila == fila && actual->columna == columna) {
-                actual->valor = valor;
-                return;
-            }
-            previo = actual;
-            actual = (minimo == fila) ? actual->siguiente : actual->abajo;
-        }
-        if (!actual && previo) {
-            if (minimo == fila) {
+        string recorrido = (fila >= columna) ? "fila" : "columna";
+        if (recorrido == "fila") {
+            buscarIndiceFila(fila, actual);
+            if (!actual->siguiente) {
                 Node <T> *temporal = new Node<T>(fila, columna, valor);
-                previo->siguiente = temporal;
-            } else {
-                Node <T> *temporal = new Node<T>(fila, columna, valor);
-                previo->abajo = temporal;
+                actual->siguiente = temporal;
+                Node <T> *numeroColumna = this->root;
+                buscarIndiceColumna(columna, numeroColumna);
+                while (numeroColumna && numeroColumna->fila <= fila) {
+                    numeroColumna = numeroColumna->abajo;
+                }
+                if (numeroColumna->abajo) {
+                    Node <T> *siguienteNodo = numeroColumna->abajo;
+                    temporal->abajo = siguienteNodo;
+                    numeroColumna->abajo = temporal;
+                } else {
+                    numeroColumna->abajo = temporal;
+                }
             }
-        }
-        else if (previo && previo->siguiente && minimo == fila) {
-            Node <T> *temporal = new Node<T>(fila, columna, valor);
-            previo->siguiente = temporal->siguiente;
-            previo->siguiente = temporal;
-        }
-        else if (previo && previo->siguiente && minimo == columna) {
-            Node <T> *temporal = new Node<T>(fila, columna, valor);
-            previo->abajo = temporal->abajo;
-            previo->abajo = temporal;
+        } else {
+            buscarIndiceColumna(columna, actual);
+
         }
     };
 
@@ -96,21 +112,29 @@ public:
 
     void imprimir() const {
         // Imprime la matriz
-        Node <T> *actual = this->root;
-        Node <T> *cota = this->root;
-        while (actual) {
-            while (actual) {
-                cout << actual->indice << ' ';
-                actual = actual->siguiente;
+        Node <T> *actual = nullptr;
+        Node <T> *pivote = this->root;
+        for (int i = 0; i <= this->filas; ++i) {
+            actual = pivote;
+            for (int j = 0; j <= this->columnas; ++j) {
+                if (actual) {
+                    if (actual->indice == -1 && actual->fila == i-1 && actual->columna == j-1) {
+                        cout << actual->valor << ' ';
+                    } else {
+                        cout << actual->indice << ' ';
+                    }
+                    actual = actual->siguiente;
+                } else {
+                    cout << '0' << ' ';
+                }
             }
-            actual = cota->abajo;
-            cota = actual;
+            pivote = pivote->abajo;
             cout << endl;
         }
     };
 
     ~Matrix() {
-        this->root->killSelf();
+        clear(this->root);
     };
 };
 

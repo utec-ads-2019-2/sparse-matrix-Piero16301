@@ -84,6 +84,31 @@ public:
         inicializarCeldas();
     };
 
+    Matrix(const Matrix &other) : indicesFilas(other.filas), indicesColumnas(other.columnas) {
+        filas = other.filas;
+        columnas = other.columnas;
+        root = new Node<T>(0, 0, 0);
+        root->siguiente = root;
+        root->abajo = root;
+        indicesFilas[0] = root;
+        indicesColumnas[0] = root;
+        inicializarCeldas();
+        for (int i = 0; i < other.filas; ++i) {
+            for (int j = 0; j < other.columnas; ++j) {
+                this->establecerCelda(i, j, other.operator()(i, j));
+            }
+        }
+    }
+
+    Matrix <T> &operator=(const Matrix <T> &other) {
+        for (int i = 0; i < other.filas; ++i) {
+            for (int j = 0; j < other.columnas; ++j) {
+                this->establecerCelda(i, j, other.operator()(i, j));
+            }
+        }
+        return (*this);
+    }
+
     void establecerCelda(int fila, int columna, T valor) {
         // Se asigna un valor a una celda específica
         if (!(fila >= 0 && fila < this->filas && columna >= 0 && columna < this->columnas)) {

@@ -23,7 +23,6 @@ void Tester::testMatrix(unsigned int rows, unsigned int columns) {
             ASSERT(result(i, j) == matrix1[i][j] * scalar, "There is a problem with the scalar multiplication");
         }
     }
-    cout << "Paso multiplicacion escalar" << endl;
 
     int **matrix2 = buildMatrix<T>(rows, columns);
     Matrix<T> test2 = setMatrix<T>(matrix2, rows, columns);
@@ -33,7 +32,6 @@ void Tester::testMatrix(unsigned int rows, unsigned int columns) {
             ASSERT(result(i, j) == matrix1[i][j] + matrix2[i][j], "There is a problem with the addition");
         }
     }
-    cout << "Paso suma" << endl;
 
     result = test1 - test2;
     for (int i = 0; i < rows; ++i) {
@@ -41,7 +39,6 @@ void Tester::testMatrix(unsigned int rows, unsigned int columns) {
             ASSERT(result(i, j) == matrix1[i][j] - matrix2[i][j], "There is a problem with the subtraction");
         }
     }
-    cout << "Paso resta" << endl;
 }
 
 template <typename T>

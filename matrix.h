@@ -243,6 +243,7 @@ public:
     };
 
     ~Matrix() {
+        // Se eliminan todos los nodos
         for (Node <T> *&iterador : indicesColumnas) {
             Node <T> *temporal = iterador->abajo;
             delete iterador;

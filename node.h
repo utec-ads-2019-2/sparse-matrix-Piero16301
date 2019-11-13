@@ -7,14 +7,15 @@ class Matrix;
 template <typename T>
 class Node {
 protected:
-    Node<T> *siguiente = nullptr, *abajo = nullptr;
-    int fila = -1, columna = -1, indice = -1;
+    Node<T> *siguiente = nullptr;
+    Node<T> *abajo = nullptr;
+    int fila = 0;
+    int columna = 0;
     T valor = 0;
 
 public:
-    Node() : siguiente{nullptr}, abajo{nullptr} {}
-    Node(int indice) : siguiente{nullptr}, abajo{nullptr}, indice{indice} {}
-    Node(int fila, int columna, T valor) : siguiente{nullptr}, abajo{nullptr}, fila{fila}, columna{columna}, valor{valor} {};
+    Node(int fila, int columna, T valor) : siguiente{this}, abajo{this}, fila{fila}, columna{columna}, valor{valor} {};
+    ~Node() {};
 
     friend class Matrix<T>;
 };

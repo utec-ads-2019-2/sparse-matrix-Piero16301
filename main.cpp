@@ -3,14 +3,18 @@
 #include "tester/tester.h"
 
 int main() {
-    //Tester::execute();
+    Tester::execute();
 
-    Matrix <int> matrix(4, 6);
-    matrix.establecerCelda(0, 0, 9);
-    matrix.establecerCelda(0, 1, 8);
-    matrix.establecerCelda(0, 2, 7);
-    matrix.establecerCelda(0, 3, 6);
+    /*Matrix <int> matrix(2, 3);
+    matrix.establecerCelda(0, 0, 1);
+    matrix.establecerCelda(0, 1, 2);
+    matrix.establecerCelda(0, 2, 3);
+    matrix.establecerCelda(1, 0, 4);
+    matrix.establecerCelda(1, 1, 5);
+    matrix.establecerCelda(1, 2, 6);
     matrix.imprimir();
+    Matrix <int> matrix1 = matrix.transpose();
+    matrix1.imprimir();*/
 
     return EXIT_SUCCESS;
 }

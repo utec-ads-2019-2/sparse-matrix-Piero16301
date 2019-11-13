@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/piero/Downloads/sparse-matrix-Piero16301/main.cpp
-iostream
--
-tester/tester.h
-C:/Users/piero/Downloads/sparse-matrix-Piero16301/tester/tester.h
-
 C:/Users/piero/Downloads/sparse-matrix-Piero16301/matrix.h
 stdexcept
 -
@@ -25,6 +19,10 @@ type_traits
 -
 
 C:/Users/piero/Downloads/sparse-matrix-Piero16301/node.h
+
+C:/Users/piero/Downloads/sparse-matrix-Piero16301/tester/tester.cpp
+tester.h
+C:/Users/piero/Downloads/sparse-matrix-Piero16301/tester/tester.h
 
 C:/Users/piero/Downloads/sparse-matrix-Piero16301/tester/tester.h
 stdexcept

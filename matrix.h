@@ -109,6 +109,7 @@ public:
         return (*this);
     }
 
+    // No estás borrando cuando valor es 0
     void establecerCelda(int fila, int columna, T valor) {
         // Se asigna un valor a una celda específica
         if (!(fila >= 0 && fila < this->filas && columna >= 0 && columna < this->columnas)) {
@@ -156,6 +157,8 @@ public:
         nodoColumna->abajo = temporal;
         return temporal->valor;
     };
+
+    // Trabajar con la sobrecarga para obtener los valores va a disminuir el performance de las operaciones
 
     Matrix <T> operator*(T escalar) const {
         // Multiplicacion de matriz por un escalar (producto punto)
